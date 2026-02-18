@@ -1,0 +1,717 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=windows-1250">
+  <meta name="generator" content="PSPad editor, www.pspad.com">
+  <title></title>
+  <style type="text/css">
+    .xlink {cursor:pointer}
+    .error_on     {background: url("fault_on.png") no-repeat top; background-position: center; width: 125px; height: 45px;vertical-align:middle; text-align: center;font-size:9px; font-family: verdana; font-weight: bold}
+    .error_off    {background: url("fault_off.png") no-repeat top; background-position: center; width: 125px; height: 45px; vertical-align:middle; text-align: center;font-size:9px; font-family: verdana; font-weight: bold; color: silver;}
+    .run_on       {background: url("red_run_on.png") no-repeat top; width: 35px;background-position: center; background-repeat: no-repeat; background-position: 10% 50%}
+    .run_off      {background: url("red_run_off.png") no-repeat top; width: 35px;background-position: center; background-repeat: no-repeat;background-position: 20% 50%}
+    .stateTable   {font-size:19px; font-family: verdana; font-weight: normal; border-spacing:10px 20px;text-align: bold}
+    .fontControl  {font-size:13px; font-family:verdana; font-weight: normal;text-align: center; font-weight: bold}
+    .fontSectionLable {font-size:14px; font-family:verdana; font-weight: normal;text-align: center; font-weight: bold}
+    .inputText    {font-size:18px; width: 52px; background-color: transparent; font-family:verdana; text-align: right; font-weight: normal; padding: 0px; border-width: 0px;}
+  </style>
+  
+  
+  <script LANGUAGE="JavaScript" type ="text/javascript">
+  
+   var StateConection = 0;
+  
+  function Init(){ 
+    Errors();   
+    StateMachine_M1();          
+    buttonsINIT();
+    }
+  
+  function Periodically(){
+  buttonsINIT();
+      if (StateConection == 1)
+      {
+        Voltage_Gauge();
+        Speed_Gauge();
+        StateMachine_M1();          
+        ErrorsCheck_M1();
+       } 
+
+    }
+
+/* ------------------------ Buttons Initial function -------------------------*/    
+  function  buttonsINIT(){
+      var retMsg;
+      var onoffvar; 
+      xmlDoc=loadXMLDoc("check_list.xml");
+                
+      // On-Off switch Motor 1
+      on_off_M1=xmlDoc.getElementsByTagName("M1_onoff")[0];
+      if(pcm.ReadVariable(on_off_M1.childNodes[0].nodeValue))
+				{
+					var onoffvar = pcm.LastVariable_vValue;
+					if(onoffvar == 0)
+					{
+            document.images['onoff_M1'].src='OffBut.png';
+          }
+          else                                               
+          {
+            document.images['onoff_M1'].src='OnBut.png';
+          }
+        }
+        
+      // Fault Clear button for Motor 1
+      clrFlt_M1=xmlDoc.getElementsByTagName("M1_clrFltvar")[0]; 
+      if(pcm.ReadVariable(clrFlt_M1.childNodes[0].nodeValue))
+				{
+					var onoffvar = pcm.LastVariable_vValue;
+					if(onoffvar == 0)
+					{
+            document.images['fltClr_M1'].src='GreenBut.png';
+          }
+          else
+          {
+            document.images['fltClr_M1'].src='GreenButPush.png';
+          }
+        } 
+
+      // Sampling time                   
+      if(pcm.ReadVariable(on_off_M1.childNodes[0].nodeValue))
+				{
+          StateConection = 1;  
+          Timer_object = window.setTimeout("Periodically()", 50);
+				}
+			else
+				{
+				  StateConection = 0; 
+				  Timer_object = window.setTimeout("Periodically()", 2000);
+					window.document.getElementById("txtErrMsg").innerHTML = pcm.LastRetMsg;
+				}
+    }
+/* ------------------- End of Buttons Initial function ---------------------- */  
+//
+/* -------------------------- Errors check function ------------------------- */
+    function ErrorsCheck_M1(){
+      xmlDoc=   loadXMLDoc("check_list.xml");
+      error=    xmlDoc.getElementsByTagName("error");
+      fmname=   xmlDoc.getElementsByTagName("FMNAME");
+      Ername=   xmlDoc.getElementsByTagName("errorname");
+      fmrunname=xmlDoc.getElementsByTagName("FMRUNNAME");
+      
+      for (i=0;i<error.length;i++)
+      {
+        if(pcm.ReadVariable(fmname[i].childNodes[0].nodeValue))
+				{
+					var ValueState = pcm.LastVariable_vValue;
+					if(ValueState == 0)
+					{
+            document.getElementById("M1_" + Ername[i].childNodes[0].nodeValue).className = "error_off";
+          }
+          else
+          {
+            document.getElementById("M1_" + Ername[i].childNodes[0].nodeValue).className = "error_on";
+          }
+				}
+				else
+				{
+					//window.document.getElementById("txtErrMsg").innerHTML = pcm.LastRetMsg;
+				}
+				if(pcm.ReadVariable(fmrunname[i].childNodes[0].nodeValue))
+				{
+					var ValueState = pcm.LastVariable_vValue;
+					if(ValueState == 0)
+					{
+            document.getElementById("M1_run_" + Ername[i].childNodes[0].nodeValue).className = "run_off";
+          }
+          else
+          {
+            document.getElementById("M1_run_" + Ername[i].childNodes[0].nodeValue).className = "run_on";
+          }
+				}
+				else
+				{
+					//window.document.getElementById("txtErrMsg").innerHTML = pcm.LastRetMsg;
+				}
+      } 
+    }
+/* -------------------- End of Errors check function  ----------------------- */  
+//
+/* -------------------- Application faults table M1 ------------------------- */   
+    function Errors(){
+      var InitText_M1 = "";
+      xmlDoc=loadXMLDoc("check_list.xml");
+      errorTag=xmlDoc.getElementsByTagName("error");
+      Ername=xmlDoc.getElementsByTagName("errorname");
+      fmname=xmlDoc.getElementsByTagName("FMNAME");
+      states=xmlDoc.getElementsByTagName("state"); 
+      
+      InitText_M1 += "<table border='0' align='center'>"
+            
+      for (i=0;i<errorTag.length;i++)
+      { 
+
+       InitText_M1 += "<tr>";
+        
+            InitText_M1 += "<td id='M1_"+ Ername[i].childNodes[0].nodeValue +"' class='error_off'>"+ Ername[i].childNodes[0].nodeValue +"</td>";
+            InitText_M1 += "<td id='M1_run_"+ Ername[i].childNodes[0].nodeValue +"' class='run_off'></td>";
+            i++;
+            
+            if(i<errorTag.length)
+            {
+              InitText_M1 += "<td id='M1_"+ Ername[i].childNodes[0].nodeValue +"' class='error_off'>"+ Ername[i].childNodes[0].nodeValue +"</td>";
+              InitText_M1 += "<td id='M1_run_"+ Ername[i].childNodes[0].nodeValue +"' class='run_off'></td>";
+            }
+         InitText_M1 += "</tr>";
+        }
+      
+    InitText_M1 += "</table>"       
+      
+    document.getElementById("errors_tab_M1").innerHTML =InitText_M1;
+    }       
+/* ----------------- End of application faults table M1 --------------------- */
+//
+/* ---------------- On-Off toggle button routine - MOTOR 1 ------------------ */         
+    function Power_click_M1(){
+      var retMsg;
+      var onoffvar; 
+      xmlDoc=loadXMLDoc("check_list.xml");
+      on_off=xmlDoc.getElementsByTagName("M1_onoff");
+      if(pcm.ReadVariable(on_off[0].childNodes[0].nodeValue))
+				{
+					var onoffvar = pcm.LastVariable_vValue;
+					if(onoffvar == 0)
+					{
+					  onoffvar = 1;
+            document.images['onoff_M1'].src     ='OnBut.png';            
+          }
+          else
+          {
+            onoffvar = 0;
+            document.images['onoff_M1'].src     ='OffBut.png';
+          }
+				}
+				
+				succ = pcm.WriteVariable(on_off[0].childNodes[0].nodeValue, onoffvar, retMsg);
+    }      
+/* ------------ EOF On-Off toggle button routine - MOTOR 1 ------------------ */  
+//
+/* ------------------ Fault Clear button routine - MOTOR 1 ------------------ */
+    function Fault_clr_click_M1(){
+      var retMsg;
+      var clearFlt; 
+      xmlDoc=loadXMLDoc("check_list.xml");
+      clr_flt=xmlDoc.getElementsByTagName("M1_clrFltvar");
+      if(pcm.ReadVariable(clr_flt[0].childNodes[0].nodeValue))
+				{
+					var clearFlt = pcm.LastVariable_vValue;
+					if(clearFlt == 0)
+					{
+					  clearFlt = 1;
+            document.images['fltClr_M1'].src  ='GreenButPush.png';
+          }
+          else
+          {
+					  clearFlt = 0;
+            document.images['fltClr_M1'].src  ='GreenBut.png';
+          }          
+				}                                
+				
+				succ = pcm.WriteVariable(clr_flt[0].childNodes[0].nodeValue, clearFlt, retMsg);
+    } 
+/* -------------- EOF Fault Clear button routine - MOTOR 1 ------------------ */  
+//
+/* ------------------------ Voltage Gauge routine --------------------------- */  
+    function Voltage_Gauge(){
+      var retMsg;
+      var ValueVoltage;
+      xmlDoc=loadXMLDoc("check_list.xml");
+      var ActualVoltage =xmlDoc.getElementsByTagName("M1_ActualVoltage");
+      
+      if(pcm.ReadVariable(ActualVoltage[0].childNodes[0].nodeValue))
+      {
+        ValueVoltage = pcm.LastVariable_vValue;
+        gaugeVdcBUS_M1.NeedleID = 0;
+        gaugeVdcBUS_M1.NeedleValue = ValueVoltage;
+      }
+        else
+      {
+        //window.document.getElementById("txtErrMsg").innerHTML = pcm.LastRetMsg;
+      }
+    }  
+/* --------------------- End of Voltage Gauge routine ----------------------- */
+//
+/* ------------------------ Speed Gauge routine ----------------------------- */  
+    function Speed_Gauge(){
+      var retMsg;
+      var ValueSpeed;
+      xmlDoc=loadXMLDoc("check_list.xml");
+      
+      var ActualSpeed=xmlDoc.getElementsByTagName("M1_ActualSpeed")[0];
+      if(pcm.ReadVariable(ActualSpeed.childNodes[0].nodeValue))
+      {
+        ValueSpeed = pcm.LastVariable_vValue;
+        gaugeSPEED_M1.NeedleID = 0;
+        gaugeSPEED_M1.NeedleValue = ValueSpeed;
+      }
+        else
+      {
+        //window.document.getElementById("txtErrMsg").innerHTML = pcm.LastRetMsg;
+      }
+      
+      var RequestedSpeed=xmlDoc.getElementsByTagName("M1_RequiredSpeed");
+      if(pcm.ReadVariable(RequestedSpeed[0].childNodes[0].nodeValue))
+      {
+        ValueSpeed = pcm.LastVariable_vValue;
+        gaugeSPEED_M1.NeedleID = 1;
+        gaugeSPEED_M1.NeedleValue = ValueSpeed;
+      }
+        else
+      {
+        //window.document.getElementById("txtErrMsg").innerHTML = pcm.LastRetMsg;
+      }
+         
+    }  
+/* --------------------- End of Speed Gauge routine ------------------------- */
+//
+/* ---------- Speed Gauge routine - Reference speed given by gauge ---------- */  
+    function Speed_Gauge_SetUp_M1(){
+      var retMsg;
+      xmlDoc=loadXMLDoc("check_list.xml");
+      var RequestedSpeed=xmlDoc.getElementsByTagName("M1_RequiredSpeed");
+
+      gaugeSPEED_M1.NeedleID = 1;
+      succ = pcm.WriteVariable(RequestedSpeed[0].childNodes[0].nodeValue, gaugeSPEED_M1.NeedleValue, retMsg);
+      
+    }  
+   
+/* --------------------- End of Speed Gauge routine ------------------------- */
+//  
+/* ------------------------ State machine for both motors ------------------- */  
+    // State amchine for Motor 1
+    function StateMachine_M1(){
+      var ValueState;
+      
+      xmlDoc=loadXMLDoc("check_list.xml");
+      var ActualState=xmlDoc.getElementsByTagName("M1_states")[0].getAttribute("FreemasterName");
+            
+      if(pcm.ReadVariable(ActualState))
+      {
+        xmlDoc=loadXMLDoc("check_list.xml");
+        var states=xmlDoc.getElementsByTagName("M1_state"); 
+        ValueState = pcm.LastVariable_vValue;
+  
+        var x=document.getElementById('M1_State_table').rows;
+        var y=x[0].cells;
+        y[0].align="center";
+        y[0].innerHTML =  states[ValueState].childNodes[0].nodeValue;  
+        y[0].className = "stateTableCell";
+        
+        if(ValueState == 6)
+        {  
+          document.getElementById('M1_State_table').style.background = "#FF9999";
+        }      
+        else
+        {
+          document.getElementById('M1_State_table').style.background = "transparent";  
+        }    
+     }
+     document.getElementById('M1_State_table').className = "stateTable";         
+     }
+/* ------------------ End of  State machine for motor 1 --------------------- */  
+//     
+//
+/* -----------------------  loadXMLDoc() routine -----------------------------*/  
+   function loadXMLDoc(dname) 
+    {
+      try //Internet Explorer
+      {
+        xmlDoc=new ActiveXObject("Msxml2.DOMDocument.3.0");
+      }
+      catch(e)
+      {
+        try //Firefox, Mozilla, Opera, etc.
+      {
+        xmlDoc=document.implementation.createDocument("","",null);
+      }
+      catch(e) {alert(e.message)}
+      }
+      try 
+      {
+      xmlDoc.async=false;
+      xmlDoc.load(dname);
+      return(xmlDoc);
+    }
+    catch(e) {alert(e.message)}
+    return(null);
+    }  
+  
+  </script>
+  
+  </head>
+  <body onLoad="Init()" background="background.png">
+  
+                                       
+                                  
+  <OBJECT id="MCB_PC_Master_Services1" height="1" width="1" classid="clsid:48A185F1-FFDB-11D3-80E3-00C04F176153" name="pcm">
+	</OBJECT>
+	
+  <OBJECT CLASSID = "clsid:5220cb21-c88d-11cf-b347-00aa00a28331">  <PARAM NAME="LPKPath" VALUE="gmsctls.lpk"> 
+  </OBJECT>
+   
+  <div style=" position:absolute" >
+    
+  <table width="600px" cellspacing="5px" border="0"> 
+    <tr>                                                      
+    <td width="200" align="center" rowspan="2" valign="top">
+    <div class="fontSectionLable">Application Faults</div>
+    <div id="errors_tab_M1"></div>
+    </td> 
+      
+   <td width="300" align="right">
+    <OBJECT  id="gaugeVdcBUS_M1" codeBase="agauge.cab" classid="clsid:B2E0C2EA-A543-11CF-BC8C-207402C10627" width="300" height="100">
+                                                <param name="_Version" value="131082">
+                                                <param name="_ExtentX" value="5900">
+                                                <param name="_ExtentY" value="2461">
+                                                <param name="_StockProps" value="70">
+                                                <param name="Caption" value>
+                                                <param name="Enabled" value="-1">
+                                                <param name="BackColor" value="14474460">
+                                                <param name="AutoRedraw" value="-1">
+                                                <param name="BevelInner" value="2">
+                                                <param name="BevelOuter" value="1">
+                                                <param name="BevelWidth" value="1">
+                                                <param name="BorderWidth" value="2">
+                                                <param name="BorderType" value="1">
+                                                <param name="Outline" value="0">
+                                                <param name="OutlineAlign" value="0">
+                                                <param name="OutlineColor" value="0">
+                                                <param name="OutlineTitle" value="PMSM">
+                                                <param name="OutlineWidth" value="1">
+                                                <param name="FocusOutline" value="0">
+                                                <param name="FrameBottom" value="1.15">
+                                                <param name="FrameColor" value="8421440">
+                                                <param name="FrameLeft" value="-0.95">
+                                                <param name="FrameRight" value="1.15">
+                                                <param name="FrameShape??0" value="0,100, 100,0, 900,0, 1000,100, 1000,900, 900,1000, 100,1000, 0,900">
+                                                <param name="FrameStyle" value="0">
+                                                <param name="FrameTop" value="-1.15">
+                                                <param name="ScaleSize" value="1">
+                                                <param name="ScaleDirection0" value="0">
+                                                <param name="ScaleMaxValue0" value="30">
+                                                <param name="ScaleMinValue0" value="0">
+                                                <param name="ScaleOriginX0" value="-0.07">
+                                                <param name="ScaleOriginY0" value="-5.5">
+                                                <param name="ScaleStartAngle0" value="335">
+                                                <param name="ScaleStopAngle0" value="30">
+                                                <param name="FontSize" value="1">
+                                                <param name="CaptionSize" value="3">
+                                                <param name="CaptionColor0" value="16744576">
+                                                <param name="CaptionFontID0" value="0">
+                                                <param name="Caption0" value>
+                                                <param name="CaptionX0" value="0">
+                                                <param name="CaptionY0" value="-0.28">
+                                                <param name="CaptionAlign0" value="2">
+                                                <param name="CaptionVisible0" value="-1">
+                                                <param name="CaptionFlag0" value="0">
+                                                <param name="CaptionColor1" value="#450000">
+                                                <param name="CaptionFontID1" value="0">
+                                                <param name="Caption1" value="DC Bus Voltage">
+                                                <param name="CaptionX1" value="0">
+                                                <param name="CaptionY1" value="-0.5">
+                                                <param name="CaptionAlign1" value="2">
+                                                <param name="CaptionVisible1" value="-1">
+                                                <param name="CaptionFlag1" value="0">
+                                                <param name="CaptionColor2" value="#450000">
+                                                <param name="CaptionFontID2" value="0">
+                                                <param name="Caption2" value="[V]">
+                                                <param name="CaptionX2" value="0">
+                                                <param name="CaptionY2" value="-0.9">
+                                                <param name="CaptionAlign2" value="2">
+                                                <param name="CaptionVisible2" value="-1">
+                                                <param name="CaptionFlag2" value="0">
+                                                <param name="AnnularSize" value="3">
+                                                <param name="AnnularColor0" value="8454143">
+                                                <param name="AnnularFloat0" value="0">
+                                                <param name="AnnularFloatOffset0" value="0">
+                                                <param name="AnnularInnerRadius0" value="5.75">
+                                                <param name="AnnularOuterRadius0" value="6">
+                                                <param name="AnnularScaleID0" value="0">
+                                                <param name="AnnularStartValue0" value="0">
+                                                <param name="AnnularStopValue0" value="8">
+                                                <param name="AnnularVisible0" value="-1">
+                                                <param name="AnnularColor1" value="65280">
+                                                <param name="AnnularFloat1" value="0">
+                                                <param name="AnnularFloatOffset1" value="0">
+                                                <param name="AnnularInnerRadius1" value="5.75">
+                                                <param name="AnnularOuterRadius1" value="6">
+                                                <param name="AnnularScaleID1" value="0">
+                                                <param name="AnnularStartValue1" value="8">
+                                                <param name="AnnularStopValue1" value="18">
+                                                <param name="AnnularVisible1" value="-1">
+                                                <param name="AnnularColor2" value="33023">
+                                                <param name="AnnularFloat2" value="0">
+                                                <param name="AnnularFloatOffset2" value="0">
+                                                <param name="AnnularInnerRadius2" value="5.75">
+                                                <param name="AnnularOuterRadius2" value="6">
+                                                <param name="AnnularScaleID2" value="0">
+                                                <param name="AnnularStartValue2" value="18">
+                                                <param name="AnnularStopValue2" value="30">
+                                                <param name="AnnularVisible2" value="-1">
+                                                <param name="HubSize" value="0">
+                                                <param name="NeedleSize" value="1">
+                                                <param name="NeedleColor0" value="4210816">
+                                                <param name="NeedleDigital0" value="0">
+                                                <param name="NeedleDigitalColor0" value="0">
+                                                <param name="NeedleDigitalDecimals0" value="0">
+                                                <param name="NeedleDigitalFontID0" value="0">
+                                                <param name="NeedleDigitalX0" value="0">
+                                                <param name="NeedleDigitalY0" value="0">
+                                                <param name="NeedleLength0" value="6.01">
+                                                <param name="NeedleMouseControl0" value="0">
+                                                <param name="NeedleScaleID0" value="0">
+                                                <param name="NeedleShape??0" value>
+                                                <param name="NeedleStyle0" value="1">
+                                                <param name="NeedleValue0" value="0">
+                                                <param name="NeedleWidth0" value="0.4">
+                                                <param name="NeedleVisible0" value="-1">
+                                                <param name="NeedleClip0" value="-1">
+                                                <param name="TicSize" value="2">
+                                                <param name="TicColor0" value="0">
+                                                <param name="TicFloat0" value="0">
+                                                <param name="TicDeltaValue0" value="5">
+                                                <param name="TicFloatOffset0" value="0">
+                                                <param name="TicFontID0" value="0">
+                                                <param name="TicInnerRadius0" value="5.75">
+                                                <param name="TicLabel0" value="-1">
+                                                <param name="TicLabelRadius0" value="6.5">
+                                                <param name="TicLabelRotated0" value="0">
+                                                <param name="TicOuterRadius0" value="6.2">
+                                                <param name="TicScaleID0" value="0">
+                                                <param name="TicStartValue0" value="0">
+                                                <param name="TicStopValue0" value="30">
+                                                <param name="TicStyle0" value="0">
+                                                <param name="TicWidth0" value="0">
+                                                <param name="TicVisible0" value="-1">
+                                                <param name="TicAutoTic0" value="0">
+                                                <param name="TicCount0" value="6">
+                                                <param name="TicSubCount0" value="0">
+                                                <param name="TicColor1" value="0">
+                                                <param name="TicFloat1" value="0">
+                                                <param name="TicDeltaValue1" value="1">
+                                                <param name="TicFloatOffset1" value="0">
+                                                <param name="TicFontID1" value="0">
+                                                <param name="TicInnerRadius1" value="5.75">
+                                                <param name="TicLabel1" value="0">
+                                                <param name="TicLabelRadius1" value="1">
+                                                <param name="TicLabelRotated1" value="0">
+                                                <param name="TicOuterRadius1" value="6">
+                                                <param name="TicScaleID1" value="0">
+                                                <param name="TicStartValue1" value="0">
+                                                <param name="TicStopValue1" value="30">
+                                                <param name="TicStyle1" value="0">
+                                                <param name="TicWidth1" value="0">
+                                                <param name="TicVisible1" value="-1">
+                                                <param name="TicAutoTic1" value="0">
+                                                <param name="TicCount1" value="6">
+                                                <param name="TicSubCount1" value="0">
+											</OBJECT>
+    </td>     
+    </tr>     
+  
+     <tr>
+     <td>
+                 
+                                    <script language="VBScript">    
+                                    Sub gaugeSPEED_M1_change()     'agauge Change event handled by VBScript 
+                                        Speed_Gauge_SetUp_M1()     'JScript handler call
+                                    End Sub
+                                    </script>
+                                                            
+
+            <OBJECT id="gaugeSPEED_M1" codeBase="agauge.cab" classid="clsid:B2E0C2EA-A543-11CF-BC8C-207402C10627" width="300" height="180" VIEWASTEXT>               
+                                    <param name="_Version" value="131082">
+                                    <param name="_Version" value="131082">
+                                    <param name="_ExtentX" value="8837">
+                                    <param name="_ExtentY" value="5371">
+                                    <param name="_StockProps" value="70">
+                                    <param name="Caption" value>
+                                    <param name="Enabled" value="-1">
+                                    <param name="BackColor" value="14277081">
+                                    <param name="AutoRedraw" value="-1">
+                                    <param name="BevelInner" value="2">
+                                    <param name="BevelOuter" value="1">
+                                    <param name="BevelWidth" value="1">
+                                    <param name="BorderWidth" value="2">
+                                    <param name="BorderType" value="1">
+                                    <param name="Outline" value="0">
+                                    <param name="OutlineAlign" value="2">
+                                    <param name="OutlineColor" value="0">
+                                    <param name="OutlineTitle" value>
+                                    <param name="OutlineWidth" value="1">
+                                    <param name="FocusOutline" value="0">
+                                    <param name="FrameBottom" value="1.29">
+                                    <param name="FrameColor" value="8421440">
+                                    <param name="FrameLeft" value="-2.25">
+                                    <param name="FrameRight" value="2.25">
+                                    <param name="FrameShape??0" value="0,180, 100,0, 900,0, 1000,180, 1000,820, 900,1000, 100,1000, 0,820">
+                                    <param name="FrameStyle" value="0">
+                                    <param name="FrameTop" value="-1.5">
+                                    <param name="ScaleSize" value="1">
+                                    <param name="ScaleDirection0" value="0">
+                                    <!--<param name="ScaleMaxValue0" value="8000">  -->
+                                    <param name="ScaleMaxValue0" value="5000">
+                                    <param name="ScaleMinValue0" value="0">
+                                    <param name="ScaleOriginX0" value="0">
+                                    <param name="ScaleOriginY0" value="-0.45">
+                                    <param name="ScaleStartAngle0" value="245">
+                                    <param name="ScaleStopAngle0" value="115">
+                                    <param name="FontSize" value="2">
+                                    <param name="CaptionSize" value="2">
+                                    <param name="CaptionColor0" value="#450000">
+                                    <param name="CaptionFontID0" value="0">
+                                    <param name="Caption0" value="Speed">
+                                    <param name="CaptionX0" value="0">
+                                    <param name="CaptionY0" value="-0.7">
+                                    <param name="CaptionAlign0" value="2">
+                                    <param name="CaptionVisible0" value="-1">
+                                    <param name="CaptionFlag0" value="0">
+                                    <param name="CaptionColor1" value="#450000">
+                                    <param name="CaptionFontID1" value="0">
+                                    <param name="Caption1" value="[RPM]">
+                                    <param name="CaptionX1" value="0">
+                                    <param name="CaptionY1" value="-0.9">
+                                    <param name="CaptionAlign1" value="2">
+                                    <param name="CaptionVisible1" value="-1">
+                                    <param name="CaptionFlag1" value="0">
+                                    <param name="AnnularSize" value="4">
+                                    <param name="AnnularColor0" value="60280">
+                                    <param name="AnnularFloat0" value="0">
+                                    <param name="AnnularFloatOffset0" value="0">
+                                    <param name="AnnularInnerRadius0" value="0.9">
+                                    <param name="AnnularOuterRadius0" value="1">
+                                    <param name="AnnularScaleID0" value="0">
+                                    <param name="AnnularStartValue0" value="0">
+                                    <!--<param name="AnnularStopValue0" value="8000"> -->
+                                    <param name="AnnularStopValue0" value="5000">
+                                    <param name="AnnularVisible0" value="-1">
+                                    <param name="AnnularColor1" value="500">
+                                    <param name="AnnularFloat1" value="0">
+                                    <param name="AnnularFloatOffset1" value="0">
+                                    <param name="AnnularInnerRadius1" value="0.9">
+                                    <param name="AnnularOuterRadius1" value="1">
+                                    <param name="AnnularScaleID1" value="0">
+                                    <param name="AnnularStartValue1" value="0">
+                                    <param name="AnnularStopValue1" value="800">
+                                    <param name="AnnularVisible1" value="-1">
+                                    <param name="AnnularColor3" value="500">
+                                    <param name="AnnularFloat3" value="0">
+                                    <param name="AnnularFloatOffset3" value="0">
+                                    <param name="AnnularInnerRadius3" value="0.9">
+                                    <param name="AnnularOuterRadius3" value="1">
+                                    <param name="AnnularScaleID3" value="0">
+                                    <param name="AnnularStartValue3" value="4500">
+                                    <param name="AnnularStopValue3" value="5000">
+                                    <param name="AnnularVisible3" value="-1">
+                                    <param name="HubSize" value="2">
+                                    <param name="HubColor0" value="12632256">
+                                    <param name="HubRadius0" value="0.119">
+                                    <param name="HubScaleID0" value="0">
+                                    <param name="HubStyle0" value="0">
+                                    <param name="HubVisible0" value="-1">
+                                    <param name="HubColor1" value="9539985">
+                                    <param name="HubRadius1" value="0.089">
+                                    <param name="HubScaleID1" value="0">
+                                    <param name="HubStyle1" value="0">
+                                    <param name="HubVisible1" value="-1">
+                                    <PARAM NAME="NeedleSize" VALUE="2">
+                                    <PARAM NAME="NeedleDigitalFontID0" VALUE="1">
+                                    <PARAM NAME="NeedleDigitalY0" VALUE="-0.68">
+                                    <PARAM NAME="NeedleLength0" VALUE="0.8">
+                                    <PARAM NAME="NeedleWidth0" VALUE="0.08">
+                                    <PARAM NAME="NeedleVisible0" VALUE="-1">
+                                    <PARAM NAME="NeedleColor1" VALUE="470">
+                                    <PARAM NAME="NeedleLength1" VALUE="0.8">
+                                    <PARAM NAME="NeedleMouseControl1" VALUE="2">
+                                    <PARAM NAME="NeedleValue1" VALUE="413.600131157056">
+                                    <PARAM NAME="NeedleWidth1" VALUE="0.05">
+                                    <PARAM NAME="NeedleVisible1" VALUE="-1">
+                                    <PARAM NAME="NeedleClip1" VALUE="-1">
+                                    <param name="TicSize" value="2">
+                                    <param name="TicColor0" value="0">
+                                    <param name="TicFloat0" value="0">
+                                    <param name="TicDeltaValue0" value="500">
+                                    <param name="TicFloatOffset0" value="0">
+                                    <param name="TicFontID0" value="0">
+                                    <param name="TicInnerRadius0" value="0.9">
+                                    <param name="TicLabel0" value="-1">
+                                    <param name="TicLabelRadius0" value="1.30">
+                                    <param name="TicLabelRotated0" value="0">
+                                    <param name="TicOuterRadius0" value="1.10">
+                                    <param name="TicScaleID0" value="0">
+                                    <param name="TicStartValue0" value="0">
+                                    <!--<param name="TicStopValue0" value="8000"> -->
+                                    <param name="TicStopValue0" value="5000">
+                                    <param name="TicStyle0" value="0">
+                                    <param name="TicWidth0" value="0">
+                                    <param name="TicVisible0" value="-1">
+                                    <param name="TicAutoTic0" value="0">
+                                    <param name="TicCount0" value="6">
+                                    <param name="TicSubCount0" value="0">
+                                    <param name="TicColor1" value="0">
+                                    <param name="TicFloat1" value="0">
+                                    <param name="TicDeltaValue1" value="100">
+                                    <param name="TicFloatOffset1" value="0">
+                                    <param name="TicFontID1" value="0">
+                                    <param name="TicInnerRadius1" value="0.9">
+                                    <param name="TicLabel1" value="0">
+                                    <param name="TicLabelRadius1" value="0.8">
+                                    <param name="TicLabelRotated1" value="0">
+                                    <param name="TicOuterRadius1" value="1.00">
+                                    <param name="TicScaleID1" value="0">
+                                    <param name="TicStartValue1" value="0000">
+                                    <param name="TicStopValue1" value="5000">
+                                    <param name="TicStyle1" value="0">
+                                    <param name="TicWidth1" value="0">
+                                    <param name="TicVisible1" value="-1">
+                                    <param name="TicAutoTic1" value="0">
+                                    <param name="TicCount1" value="6">
+                                    <param name="TicSubCount1" value="0">
+								</OBJECT>
+    </td> 
+    </tr>  
+ </table>             
+  
+   <table width="600px" border="0" > 
+    <tr>       
+
+    <td width="200" align="center">
+    <div class="fontControl">ON/OFF</div>      
+    <img class="xlink" src="OffBut.png" name="onoff_M1" onMouseDown="Power_click_M1()" >
+    </td> 
+    
+    <td width="200" align="center">
+    <div class="fontControl" style="padding-bottom: 2px">Application State</div> 
+    <table id="M1_State_table"  cellspacing="5px" width="150px" height="70" border="5">
+      <td >    
+      </td>
+    </table>
+    </td>
+
+  
+    <td width="200" align="center">
+    <div class="fontControl" style="padding-bottom: 5px" >Clear Faults</div>
+    <img class="xlink" src="GreenBut.png"  name="fltClr_M1" onMouseDown="Fault_clr_click_M1()">
+    </td>
+    
+    </table>
+    </td>  
+
+ 
+    </tr>  
+  </table>   
+  
+   
+  <span style="visibility: hidden" face="sans-serif" id="txtErrMsg">.</span>  
+  </div>
+  </body>
+</html>

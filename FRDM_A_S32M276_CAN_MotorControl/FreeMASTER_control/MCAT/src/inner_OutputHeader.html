@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=windows-1250">
+  <meta name="generator" content="PSPad editor, www.pspad.com">
+  <title></title>
+  <style type="text/css">
+    .xlink {cursor:pointer}
+    .fontControlLabel {font-size:15px; font-family:verdana; font-weight: normal;text-align: center; font-weight: bold; padding: 4px;}    
+  </style>   
+  <script type="text/javascript" src="JS_functions\mainInclude.js"></script>
+  <script LANGUAGE="JavaScript" type ="text/javascript">
+     includeJSfiles();
+  </script>
+  </head>
+  <body id="HeaderFileTab" onload="" background="images/pozadi.png">
+       <OBJECT id="MCB_PC_Master_Services1" height="1" width="1" classid="clsid:48A185F1-FFDB-11D3-80E3-00C04F176153" name="pcm">	     
+    </OBJECT>	        
+    <OBJECT CLASSID = "clsid:5220cb21-c88d-11cf-b347-00aa00a28331">         
+      <PARAM NAME="LPKPath" VALUE="gmsctls.lpk">         
+    </OBJECT>           
+
+  <!--- Header ---> 
+  <table width="740px" cellspacing="3px"  border="1" > 
+    <tr>
+      <td align="center">  
+        <button id     ="Save_h_id" 
+            name   ="Save_h" 
+            onclick="Save_h_click()" 
+            class  ="fontTitle"
+            style   ="width: 400px; height: 30px; background-color: transparent; border-width: 3px; font-size:18px; font-family:Arial; font-weight: bold; color:rgb(136,13,19);)" >Generate Configuration File
+      </button> 
+     </td> 
+    </tr>                                               
+  </table>
+  <hr width="740" size="2" color="#8F8F8F" align="left" noshade>
+  <!--- Application roots --->
+  <table width="800px" cellspacing="2px"  border="0" >
+    <tr>
+      <td id = "headTable_Ntab"></td> 
+      <td id = "headTable_Dtab"></td>
+    </tr>
+    <tr>
+        <script>
+           //   var fso         = new ActiveXObject("Scripting.FileSystemObject"); 
+           //   var fileFolder  = fso.GetAbsolutePathName("");
+
+              var today       = new Date();                         
+              var mounth      = MounthConverter(today.getMonth());
+              var t;
+              var c = ":";
+              t = today.getHours() + c;
+              t += today.getMinutes() + c;
+              t += today.getSeconds();
+              
+              //get active motor to selct proper prefix
+              var prefixM = getActiveMotor();
+              var prefix = prefixM;
+  
+              /*************** Read application settings from parent document tables ******/   
+              var MotorsNumber    = parent.document.getElementById("MotorsNo").innerText;
+
+              // if single motor app then without prefix
+              if (MotorsNumber == "Single") prefix = "";
+              
+              document.write(HTML_write_head_line("File Name","{FM_project_loc}/" + parent.document.getElementById("ProjectPath").innerHTML + prefix + "BLDC_appconfig.h"));
+              document.write(HTML_write_head_line("Date",""+mounth+ " "+ today.getDate() + ", " + today.getFullYear() + ", " + t+ ""));                              
+              document.write(HTML_write_head_line("Description","Automatically generated file for static configuration of the BLDC application"));
+        </script>
+    </tr>
+  </table>  
+
+  <hr width="740" size="2" color="#8F8F8F" align="left" noshade>
+  <!--- ************************* Body ************************************ --->
+  
+  <!--- Application Scales --->  
+  <table width="600px" cellspacing="1px"  border="0" >
+        <script>
+        
+        // input paramters
+        if(testActiveTab('Parameters'))
+            HTML_write_output_blocks('Parameters');
+       
+        // current loop              
+        if(testActiveTab('Control Loop'))
+            HTML_write_output_blocks('Control Loop');
+      
+        // Speed loop              
+        if(testActiveTab('Speed Loop'))
+          HTML_write_output_blocks('Speed Loop');
+          
+        // Sensorless BLDC control
+        if(testActiveTab('Sensorless'))
+          HTML_write_output_blocks('Sensorless');  
+        
+        // Cascade Control Structure              
+        //if(testActiveTab('Cascade'))
+        //  HTML_write_output_blocks('Cascade');
+          
+        // FreeMASTER Scales              
+        if(testActiveTab('Parameters'))
+          HTML_write_output_blocks('FM Scales');     
+        
+        </script>	
+    </table>   
+  
+  <hr width="740" size="2" color="#8F8F8F" align="left" noshade>
+
+  </body>
+</html>

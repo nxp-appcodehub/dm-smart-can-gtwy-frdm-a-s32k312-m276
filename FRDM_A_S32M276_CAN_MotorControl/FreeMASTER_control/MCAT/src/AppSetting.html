@@ -1,0 +1,401 @@
+<!doctype html public "-//w3c//dtd html 4.01 transitional//en">
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=windows-1250">
+  <meta name="generator" content="pspad editor, www.pspad.com">
+  <title></title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <style type="text/css">   </style>
+
+    <script type="text/javascript" src="JS_functions\mainInclude.js"></script>
+    <script LANGUAGE="JavaScript" type ="text/javascript">
+      includeJSfiles();
+    </script>
+  </head>
+  <OBJECT id="MCB_PC_Master_Services1" height="1" width="1" classid="clsid:48A185F1-FFDB-11D3-80E3-00C04F176153" name="pcm">	     
+    </OBJECT>	        
+    <OBJECT CLASSID = "clsid:5220cb21-c88d-11cf-b347-00aa00a28331">         
+      <PARAM NAME="LPKPath" VALUE="gmsctls.lpk">         
+    </OBJECT> 
+  <body id="settingTab"  onload="initLoadSettings(); PospeFbckInit(); setAllTabOff();" background="images/pozadi.png">
+    <script>
+      // generates an iframe for path selector dialog
+      document.write("<iframe id=\"projectPathFrameSelect\" width=\"500\" height=\"450\" frameborder=\"1\" marginheight=\"15px\" marginwidth=\"15px\" scrolling=\"no\" src=\"\" style=\" visibility:hidden; position:absolute;\"></iframe>");
+    </script>
+
+  
+  <!--- Header ---> 
+  <table width="740px" cellspacing="3px"  border="1" >               
+    <tr>      <td>                       
+        <div id="pageTitle" class="fontTitle">Application Setting Page             
+        </div> 
+        </td>             
+    </tr>         
+  </table>
+     
+  <table width="740px" cellspacing="1px"  border="0" >
+  <!------ General settings table ------> 
+   <tr > 
+   <td width="100%" align="center" valign="top">                                                                          
+    <fieldset  style="border:4px color:gray; width: 100%; height:240;" >
+    <legend class="fontControlLabel">General Settings</legend>  
+ 
+        <fieldset  style="border:2px color:&gray; width: 24%; height:120">
+        <legend class="fontControlLabelSet" align=right>Number of Motors</legend>  
+          <form id="MotorsNo" name="MotorsNo" class = "fontCheckbox">
+            <label><input type="checkbox" name="Single" id="checkType" value = "1" onclick = "swapNM(this.form, this.value)")>Single motor </label><br>
+            <label><input type="checkbox" name="Dual" id="checkType" value = "2" onclick = "swapNM(this.form, this.value)")>Dual motor </label><br>
+            <label><input type="checkbox" name="Triple" id="checkType" value = "3" onclick = "swapNM(this.form, this.value)")>Triple motor </label> 
+          </form>
+        </fieldset>
+        
+        <fieldset  style="border:2px color:&gray; width:24%; height:120;">
+        <legend class="fontControlLabelSet" align=right>Motor Types</legend> 
+         <br>
+          <div class = "fontCheckbox">Motor #1 :
+                    <select name="M1type" id="M1type" size="1" onchange = "selectMot(id, this.value)" style="color:white; background-color: rgb(80,87,94); font-size:12px; width=75px;" >                                
+                    <option value="0">none</option>
+                    <option value="1">PMSM</option>                               
+                    <option value="2">BLDC</option>                               
+                    </select>  </div>
+          <div class = "fontCheckbox">Motor #2 :
+                    <select name="M2type" id="M2type" size="1" onchange = "selectMot(id, this.value)" style="color:white; background-color: rgb(40,113,138); font-size:12px; width=75px;" >                                
+                    <option value="0">none</option>
+                    <option value="1">PMSM</option>                               
+                    <option value="2">BLDC</option>                               
+                    </select> </div>
+          <div class = "fontCheckbox">Motor #3 :
+                    <select name="M3type" id="M3type" size="1" onchange = "selectMot(id, this.value)" style="color:white; background-color: rgb(79,120,24); font-size:12px; width=75px;">                                
+                    <option value="0">none</option>
+                    <option value="1">PMSM</option>                               
+                    <option value="2">BLDC</option>                               
+                    </select> </div>    
+        </fieldset>
+    
+        <fieldset  style="border:2px color:&gray; width: 24%; height:120">
+        <legend class="fontControlLabelSet" align=right>Data Type Representation</legend> 
+          <form id="Arithmetic" name="Arithmetic" class = "fontCheckbox">
+            <label><input type="checkbox" id="checkType" name="Frac16" value = "1" onclick = "swapDT(this.form, this.value)">16-bit fixed-point</label><br>
+            <label><input type="checkbox" id="checkType" name="Frac32" value = "2" onclick = "swapDT(this.form, this.value)">32-bit fixed-point</label><br>
+            <label><input type="checkbox" id="checkType" name="Float" value = "3" onclick = "swapDT(this.form, this.value)">32-bit floating-point</label> 
+          </form>
+        </fieldset>
+
+        <!------ IIRx Filter Coeficient scale selector ------> 
+        <fieldset  style="border:2px color:&gray; width: 23%; height:120">
+        <legend class="fontControlLabelSet" align=right>IIRx Filter Coef Scale</legend> 
+         <br>
+         <div class = "fontCheckbox">Divided by:
+                    <select name="IIRxCoefsScale" id="IIRxCoefsScale" size="1" title="IIR filter scale constant based on library function implementation, check library User's Manual" onchange = "selectIRRxScale(id, this.value)" style="font-size:12px; width=40px;" >                                
+                    <option value="1">1</option>
+                    <option value="2">2</option>                               
+                    <option value="4">4</option>                               
+                    <option value="8">8</option>
+                    </select>  </div>
+        </fieldset>      
+
+        
+            <fieldset  style="border:2px color:&gray; width: 97%; height:85;">
+        <legend class="fontControlLabelSet" align=right>Project Path Selection</legend> 
+            <button id="browseDir" onclick="browseDirectory()" style ="width: 230px; height: 25px; background-color:transparent; color:black; border-width: 1px">Browse Project Directory</button>
+            <div align="left">
+             <span class="fontControlLabelSet" style="padding-left:3mm;">Project path:</span>
+             <span id = "projectPathWrite1" style="font-size:12px; font-family:Arial;"> C:// </span>
+            </div>
+            <div align="left">
+             <span id = "projectPathWrite2" style="font-size:12px; font-family:Arial; padding-left:2.5cm"> </span>
+            </div>          
+        </fieldset>        
+    </fieldset>
+    </td>  </tr>
+    
+    <!------ Buttons for motor selection ------>
+    <tr> <td width="740" align="center" valign="middle">
+    <fieldset  style="border:4px color:gray; width: 100%; height:68;" >
+    <legend class="fontControlLabel">Motor Selection to be set</legend> 
+        <table width="100%" cellspacing="2px" border="0" >                  
+        <td width=240 align="center">                           
+           <button id="M1_ClButton" onclick="ClButtonClick(id)" style ="width: 230px; height: 25px; background-color:rgb(80,87,94); color:white; border-width: 1px">Motor #1
+           </button> </td>
+        <td width=240 align="center">                           
+           <button id="M2_ClButton" onclick="ClButtonClick(id)" style ="width: 230px; height: 25px; background-color: transparent; border-width: 1px">Motor #2
+           </button> </td>                                                      
+        <td width=240 align="center">                           
+           <button id="M3_ClButton" onclick="ClButtonClick(id)" style ="width: 230px; height: 25px; background-color: transparent; border-width: 1px">Motor #3
+           </button> </td>               
+        </table>
+    </fieldset>
+    </td>
+
+    </tr>
+    
+    <!------ MCAT Tab Manager ------>
+    <tr> <td width="740" align="center" valign="top">
+    <fieldset style="border:4px color:&gray; width: 100%; height: 40;" >
+    <legend class="fontControlLabel" >MCAT Tab Manager</legend>  
+     
+     <table width="99%" id = "Table1" cellspacing="0px" border="0" style="font-size:12px; font-family:arial; text-align: center;">
+     <tr><td>              
+         <script>
+            generate_table_Motor();
+         </script>	
+       </td></tr>	      
+      </table>
+      <br>
+      
+       
+    </fieldset>
+    </td>  </tr>    
+    
+    <!------ Control Loop Settings ------>
+    <tr> <td width="100%" align="center" valign="top">
+    <fieldset style="border:4px color:&gray; width: 100%; height: 230;" >
+    <legend class="fontControlLabel" >Control Loop Settings</legend>  
+    
+    <!--DIV related to first tab - Motor #1 Control Loop settings --> 
+    <div id="M1_ClSetting">
+       <table>
+       <td rowspan="2" width="24%" height="210" valign="top">
+       <fieldset  style="border:2px color:&gray; height:200; vertical-align:top;">
+       <legend class="fontControlLabelSet_M1" align=right>Position/Speed feedback</legend>  
+       <form id = "M1_PospeFbckId" name = "M1_PospeFbck" class = "fontCheckbox">
+       <label><input type="checkbox" id="M1_pospeCheck0" name="Resolver" onclick = "PospeFbckClick()"> Resolver feedback</label><br>
+       <label><input type="checkbox" id="M1_pospeCheck1" name="Encoder" onclick = "PospeFbckClick()"> Encoder feedback</label><br>
+       <label><input type="checkbox" id="M1_pospeCheck2" name="Sensorless" onclick = "PospeFbckClick()"> Sensorless feedback</label><br>
+       <label><input disabled type="checkbox" id="M1_pospeCheck3" name="Hall" onclick = "PospeFbckClick()"> Hall sensor</label><br>
+       <label><input disabled type="checkbox" id="M1_pospeCheck4" name="Sincos" onclick = "PospeFbckClick()"> Sincos</label>
+       </form>    
+       </fieldset> 
+       </td>
+       
+       <td rowspan="2" width="24%" height="210" valign="top">    
+       <fieldset  style="border:2px color:&gray; height:200; vertical-align:top;">
+       <legend class="fontControlLabelSet_M1" align=right>Current Control Loop</legend>  
+       <form id = "M1_Ccontroller" name = "M1_Ccontroller" class = "fontCheckbox">
+       <label><input type="checkbox" id="checkType" name="Parallel" value = "0" onclick = "swapPI(this.form, this.value)"> Parallel Current PI</label><br>
+       <label><input type="checkbox" id="checkType" name="Recurrent" value = "1" onclick = "swapPI(this.form, this.value)"> Recurrent Current PI</label>
+       </form> 
+         <div  class = "fontCheckbox"> <b> Feedforward path: </b>
+          <select name="M1_FFw_CL" id="M1_FFw_CL" size="1" onchange = "selectCFF(id, this.value)" style="color:white; background-color: rgb(80,87,94); font-size:12px; width=135px;">                                
+           <option value="0">None</option>
+           <option value="1">Zero Cancelation</option>                               
+          </select></div>        
+       </fieldset>
+       </td>
+       
+       <td rowspan="2" width="24%" height="210" valign="top">
+       <fieldset  style="border:2px color:&gray; height:200; vertical-align:top;">
+       <legend class="fontControlLabelSet_M1" align=right>Speed Control Loop</legend>  
+       <form id = "M1_Scontroller" name = "M1_Scontroller" class = "fontCheckbox">
+       <label><input type="checkbox" id="checkType" name="Parallel" value = "0" onclick = "swapPI(this.form, this.value)"> Parallel Speed PI</label><br>
+       <label><input type="checkbox" id="checkType" name="Recurrent" value = "1" onclick = "swapPI(this.form, this.value)"> Recurrent Speed PI</label>
+       </form>       
+       <div  class = "fontCheckbox"> <b> Feedforward path: </b>
+          <select name="M1_FFw_SL" id="M1_FFw_SL" size="1" onchange = "selectSFF(id, this.value)" style="color:white; background-color: rgb(80,87,94); font-size:12px; width=135px;">                                
+           <option value="0">None</option>
+           <option value="1">Incremental Ramp</option>
+           <option disabled value="2">Dynamic Ramp</option>                               
+           <option value="3">Zero Cancelation</option>                               
+          </select>
+       </div><br>
+       <div  class = "fontCheckbox"> <b> Speed Feedback Filter: </b>
+          <select name="M1_WFilt" id="M1_WFilt" size="1" onchange = "selectWF(id, this.value)" style="color:white; background-color: rgb(80,87,94); font-size:12px; width=135px;">                                
+           <option value="0">MA Filter</option>
+           <option value="1">IIR Filter</option>                               
+          </select>
+       </div>         
+       </fieldset> 
+       </td>
+       
+       <td width="24%" height="210" valign="top">
+       <fieldset  style="border:2px color:&gray; height:100; vertical-align:top;" >
+       <legend class="fontControlLabelSet_M1" align=right>Speed sensor TO</legend>  
+       <form id = "M1_TOcontroller" name = "M1_TOcontroller" class = "fontCheckbox">
+       <label><input type="checkbox" id="checkType" name="Parallel" value = "0" onclick = "swapPI(this.form, this.value)"> Parallel TO PI</label><br>
+       <label><input type="checkbox" id="checkType" name="Recurrent" value = "1" onclick = "swapPI(this.form, this.value)"> Recurrent TO PI</label> 
+       </form>
+       </fieldset>
+
+       <fieldset  style="border:2px color:&gray; height:100; vertical-align:top;">
+       <legend class="fontControlLabelSet_M1" align=right>Zero Position Alignment</legend>  
+       <form id = "M1_Alignment" name = "M1_Alignment" class = "fontCheckbox">
+       <label><input type="checkbox" id="checkType" name="Voltage" value = "0" onclick = "swapPI(this.form, this.value)"> Align Voltage</label><br>
+       <label><input type="checkbox" id="checkType" name="Current" value = "1" onclick = "swapPI(this.form, this.value)"> Align Current</label> 
+       </form>
+       </fieldset>
+       </td>
+      </table>
+    </div>   
+
+    <!--DIV related to secon tab -  Motor #2 Control Loop settings --> 
+    <div id="M2_ClSetting" style="display:none">
+       <table>
+       <td rowspan="2" width="24%"  height="210" valign="top">
+       <fieldset  style="border:2px color:&gray; height:200; vertical-align:top;">
+       <legend class="fontControlLabelSet_M2" align=right>Position/Speed feedback</legend>  
+       <form id = "M2_PospeFbckId" name = "M2_PospeFbck" class = "fontCheckbox">
+       <label><input type="checkbox" id="M2_pospeCheck0" name="Resolver" onclick = "PospeFbckClick()"> Resolver feedback</label><br>
+       <label><input type="checkbox" id="M2_pospeCheck1" name="Encoder" onclick = "PospeFbckClick()"> Encoder feedback</label><br>
+       <label><input type="checkbox" id="M2_pospeCheck2" name="Sensorless" onclick = "PospeFbckClick()"> Sensorless feedback</label><br>
+       <label><input disabled type="checkbox" id="M2_pospeCheck3" name="Hall" onclick = "PospeFbckClick()"> Hall sensor</label><br>
+       <label><input disabled type="checkbox" id="M2_pospeCheck4" name="Sincos" onclick = "PospeFbckClick()"> Sincos</label>
+       </form>    
+       </fieldset> 
+       </td>
+       
+       <td rowspan="2" width="24%"  height="210" valign="top">    
+       <fieldset  style="border:2px color:&gray; height:200; vertical-align:top;">
+       <legend class="fontControlLabelSet_M2" align=right>Current Control Loop</legend>  
+       <form id = "M2_Ccontroller" name = "M2_Ccontroller" class = "fontCheckbox">
+       <label><input type="checkbox" id="checkType" name="Parallel" value = "0" onclick = "swapPI(this.form, this.value)"> Parallel Current PI</label><br>
+       <label><input type="checkbox" id="checkType" name="Recurrent" value = "1" onclick = "swapPI(this.form, this.value)"> Recurrent Current PI</label>
+       </form> 
+         <div  class = "fontCheckbox"> <b> Feedforward path: </b>
+          <select name="M2_FFw_CL" id="M2_FFw_CL" size="1" onchange = "selectCFF(id, this.value)" style="color:white; background-color: rgb(40,113,138); font-size:12px; width=135px;">                                
+           <option value="0">None</option>
+           <option value="1">Zero Cancelation</option>                              
+          </select></div>        
+       </fieldset>
+       </td>
+       
+       <td rowspan="2" width="24%"  height="210" valign="top">
+       <fieldset  style="border:2px color:&gray; height:200; vertical-align:top;">
+       <legend class="fontControlLabelSet_M2" align=right>Speed Control Loop</legend>  
+       <form id = "M2_Scontroller" name = "M2_Scontroller" class = "fontCheckbox">
+       <label><input type="checkbox" id="checkType" name="Parallel" value = "0" onclick = "swapPI(this.form, this.value)"> Parallel Speed PI</label><br>
+       <label><input type="checkbox" id="checkType" name="Recurrent" value = "1" onclick = "swapPI(this.form, this.value)"> Recurrent Speed PI</label>
+       </form>       
+       <div  class = "fontCheckbox"> <b> Feedforward path: </b>
+          <select name="M2_FFw_SL" id="M2_FFw_SL" size="1" onchange = "selectSFF(id, this.value)" style="color:white; background-color: rgb(40,113,138); font-size:12px; width=135px;">                                
+           <option value="0">None</option>
+           <option value="1">Incremental Ramp</option>
+           <option disabled value="2">Dynamic Ramp</option>                               
+           <option value="3">Zero Cancelation</option>                               
+          </select>
+       </div><br>
+       <div  class = "fontCheckbox"> <b> Speed Feedback Filter: </b>
+          <select name="M2_WFilt" id="M2_WFilt" size="1" onchange = "selectSFF(id, this.value)" style="color:white; background-color: rgb(40,113,138); font-size:12px; width=135px;">                                
+           <option value="0">MA Filter</option>
+           <option disabled value="1">IIR Filter</option>                               
+          </select>
+       </div>         
+       </fieldset> 
+       </td>
+       
+       <td width="24%"  height="210" valign="top">
+       <fieldset  style="border:2px color:&gray; height:100; vertical-align:top;" >
+       <legend class="fontControlLabelSet_M2" align=right>Speed sensor TO</legend>  
+       <form id = "M2_TOcontroller" name = "M2_TOcontroller" class = "fontCheckbox">
+       <label><input type="checkbox" id="checkType" name="Parallel" value = "0" onclick = "swapPI(this.form, this.value)"> Parallel TO PI</label><br>
+       <label><input type="checkbox" id="checkType" name="Recurrent" value = "1" onclick = "swapPI(this.form, this.value)"> Recurrent TO PI</label> 
+       </form>
+       </fieldset>
+
+       <fieldset  style="border:2px color:&gray; height:100; vertical-align:top;">
+       <legend class="fontControlLabelSet_M2" align=right>Zero Position Alignment</legend>  
+       <form id = "M2_Alignment" name = "M2_Alignment" class = "fontCheckbox">
+       <label><input type="checkbox" id="checkType" name="Voltage" value = "0" onclick = "swapPI(this.form, this.value)"> Align Voltage</label><br>
+       <label><input type="checkbox" id="checkType" name="Current" value = "1" onclick = "swapPI(this.form, this.value)"> Align Current</label> 
+       </form>
+       </fieldset>
+       </td>
+      </table>
+    </div>
+    
+    <!--DIV related to thrird tab  - Motor #3 Control Loop settings --> 
+    <div id="M3_ClSetting" style="display:none">
+       <table>
+       <td rowspan="2" width="24%"  height="210" valign="top">
+       <fieldset  style="border:2px color:&gray; height:200; vertical-align:top;">
+       <legend class="fontControlLabelSet_M3" align=right>Position/Speed feedback</legend>  
+       <form id = "M3_PospeFbckId" name = "M3_PospeFbck" class = "fontCheckbox">
+       <label><input type="checkbox" id="M3_pospeCheck0" name="Resolver" onclick = "PospeFbckClick()"> Resolver feedback</label><br>
+       <label><input type="checkbox" id="M3_pospeCheck1" name="Encoder" onclick = "PospeFbckClick()"> Encoder feedback</label><br>
+       <label><input type="checkbox" id="M3_pospeCheck2" name="Sensorless" onclick = "PospeFbckClick()"> Sensorless feedback</label><br>
+       <label><input disabled type="checkbox" id="M3_pospeCheck3" name="Hall" onclick = "PospeFbckClick()" > Hall sensor</label><br>
+       <label><input disabled type="checkbox" id="M3_pospeCheck4" name="Sincos" onclick = "PospeFbckClick()"> Sincos</label>
+       </form>    
+       </fieldset> 
+       </td>
+       
+       <td rowspan="2" width="24%"  height="210" valign="top">    
+       <fieldset  style="border:2px color:&gray; height:200; vertical-align:top;">
+       <legend class="fontControlLabelSet_M3" align=right>Current Control Loop</legend>  
+       <form id = "M3_Ccontroller" name = "M3_Ccontroller" class = "fontCheckbox">
+       <label><input type="checkbox" id="checkType" name="Parallel" value = "0" onclick = "swapPI(this.form, this.value)"> Parallel Current PI</label><br>
+       <label><input type="checkbox" id="checkType" name="Recurrent" value = "1" onclick = "swapPI(this.form, this.value)"> Recurrent Current PI</label>
+       </form> 
+         <div  class = "fontCheckbox"> <b> Feedforward path: </b>
+          <select name="M3_FFw_CL" id="M3_FFw_CL" size="1" onchange = "selectCFF(id, this.value)" style="color:white; background-color: rgb(79,120,24); font-size:12px; width=135px;">                                
+           <option value="0">None</option>
+           <option value="1">Zero Cancelation</option>                              
+          </select></div>        
+       </fieldset>
+       </td>
+       
+       <td rowspan="2" width="24%"  height="210" valign="top">
+       <fieldset  style="border:2px color:&gray; height:200; vertical-align:top;">
+       <legend class="fontControlLabelSet_M3" align=right>Speed Control Loop</legend>  
+       <form id = "M3_Scontroller" name = "M3_Scontroller" class = "fontCheckbox">
+       <label><input type="checkbox" id="checkType" name="Parallel" value = "0" onclick = "swapPI(this.form, this.value)"> Parallel Speed PI</label><br>
+       <label><input type="checkbox" id="checkType" name="Recurrent" value = "1" onclick = "swapPI(this.form, this.value)"> Recurrent Speed PI</label>
+       </form>       
+       <div  class = "fontCheckbox"> <b> Feedforward path: </b>
+          <select name="M3_FFw_SL" id="M3_FFw_SL" size="1" onchange = "selectSFF(id, this.value)" style="color:white; background-color: rgb(79,120,24); font-size:12px; width=135px;">                                
+           <option value="0">None</option>
+           <option value="1">Incremental Ramp</option>
+           <option disabled value="2">Dynamic Ramp</option>                               
+           <option value="3">Zero Cancelation</option>                               
+          </select>
+       </div><br>
+       <div  class = "fontCheckbox"> <b> Speed Feedback Filter: </b>
+          <select name="M3_WFilt" id="M3_WFilt" size="1" onchange = "selectSFF(id, this.value)" style="color:white; background-color: rgb(79,120,24); font-size:12px; width=135px;">                                
+           <option value="0">MA Filter</option>
+           <option disabled value="1">IIR Filter</option>                               
+          </select>
+       </div>         
+       </fieldset> 
+       </td>
+       
+       <td width="24%"  height="210" valign="top">
+       <fieldset  style="border:2px color:&gray; height:100; vertical-align:top;" >
+       <legend class="fontControlLabelSet_M3" align=right>Speed sensor TO</legend>  
+       <form id = "M3_TOcontroller" name = "M3_TOcontroller" class = "fontCheckbox">
+       <label><input type="checkbox" id="checkType" name="Parallel" value = "0" onclick = "swapPI(this.form, this.value)"> Parallel TO PI</label><br>
+       <label><input type="checkbox" id="checkType" name="Recurrent" value = "1" onclick = "swapPI(this.form, this.value)"> Recurrent TO PI</label> 
+       </form>
+       </fieldset>
+
+       <fieldset  style="border:2px color:&gray; height:100; vertical-align:top;">
+       <legend class="fontControlLabelSet_M3" align=right>Zero Position Alignment</legend>  
+       <form id = "M3_Alignment" name = "M3_Alignment" class = "fontCheckbox">
+       <label><input type="checkbox" id="checkType" name="Voltage" value = "0" onclick = "swapPI(this.form, this.value)"> Align Voltage</label><br>
+       <label><input type="checkbox" id="checkType" name="Current" value = "1" onclick = "swapPI(this.form, this.value)"> Align Current</label> 
+       </form>
+       </fieldset>
+       </td>
+      </table>
+    </div> 
+
+  </fieldset>
+  </td>  </tr>
+  </table>
+
+  <!--- Button space  ---> 
+  <table width="740px" cellspacing="3px" border="0" >                     
+     <tr>                   
+        <td width=33% align="center">                           
+           <button id="Apply_button" onclick="clickApply()"  style   ="width: 160px; height: 30px; background-color: transparent; border-width: 5px" >Apply
+           </button> </td>
+        
+        <td width=33% align="center">                           
+           <button id="Cancel_button" onclick="clickCancel()"  style   ="width: 160px; height: 30px; background-color: transparent; border-width: 5px" >Cancel
+           </button> </td>
+           
+        <td width=33% align="center">                           
+           <button id="Store_button" onclick="clickStoreData()"  style   ="width: 160px; height: 30px; background-color: transparent; border-width: 5px">Store Data
+           </button> </td>               
+        </tr>            
+    </table>   
+  </body>
+</html>

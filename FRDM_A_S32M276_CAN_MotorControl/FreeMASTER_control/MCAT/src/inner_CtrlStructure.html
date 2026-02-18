@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>     
+  <head>       
+    <meta http-equiv="content-type" content="text/html; charset=windows-1250">       
+    <meta name="generator" content="PSPad editor, www.pspad.com">       
+    <title>    
+    </title>       
+    <link href="style.css" rel="stylesheet" type="text/css" />      
+    <script type="text/javascript" src="JS_functions\mainInclude.js"></script>
+    <script LANGUAGE="JavaScript" type ="text/javascript">
+      includeJSfiles();
+    </script>
+   </head>     
+  <body id="CascadeModule" onload="innerHTMLonload(); initLoadFormCascade();" background="images/pozadi.png">                                          
+    <OBJECT id="MCB_PC_Master_Services1" height="1" width="1" classid="clsid:48A185F1-FFDB-11D3-80E3-00C04F176153" name="pcm">	     
+    </OBJECT>	        
+    <OBJECT CLASSID = "clsid:5220cb21-c88d-11cf-b347-00aa00a28331">         
+      <PARAM NAME="LPKPath" VALUE="gmsctls.lpk">         
+    </OBJECT>           
+    <div style=" position:absolute" >    
+              
+      <table width="740px" cellspacing="3px"  border="1" >               
+        <tr> <td>                       
+            <div id="pageTitle" class="fontTitle">Application Control Structure</div>
+            <div id="test"></div>
+            <div id="test1"></div>
+            </td>             
+        </tr> 
+
+      </table>  
+
+     <script>
+        // iframes for control structure block diagram with close button
+        document.write("<iframe id=\"cntrStrucFrameImage\" frameborder=\"1\" marginheight=\"15px\" marginwidth=\"15px\" scrolling=\"no\" src=\"\" style=\" visibility:hidden; position:absolute;\"></iframe>");
+        document.write("<iframe id=\"cntrStrucFrameButton\" width=\"120\" height=\"25\" frameborder=\"0\" marginheight=\"1px\" marginwidth=\"0px\" scrolling=\"no\" src=\"\" style=\"visibility:hidden; position:absolute;\"></iframe>");
+     </script>
+                      
+      <!-- main application state table-->
+      <table width="740px" cellspacing="5px"  border="0" >
+          <tr align="center">
+            <td width="160" align="center" valign="top">
+            <fieldset  style="border:3px color:&gray; width: 100%; height: 390;">
+              <legend class="fontControlLabel">State Control</legend> 
+              <table width="100" border="0">
+                <tr> <td width="200"><div class="fontControl">ON</div></td></tr>
+                <tr> <td class="appOff" id = "sw_app_onoff" onClick="Power_click()" ></td></tr>
+                <tr> <td width="200"><div class="fontControl">OFF</div></td></tr>
+                <tr> <td> </td></tr>            
+                <tr> <td  valign="bottom"><div class="fontControl">Application State</div></td></tr>
+                 <tr> <!--<td align="center" id = "textApplicationState" class="appStateBox" valign="center">Application State</td>--->
+                 <td>
+                  <table id="textApplicationState"  class="appStateBox" cellspacing="5px" width="150px" height="70" border="5"> 
+                   <td> </td>
+                  </table> 
+                  
+                  <br>
+                  <table width="160px" cellspacing="3px" border="0" align="center">                     
+                  <tr>  
+                    <td>                           
+                    <button id="CntrStrcUpdateFrm" onclick="clickUpdateCtrlStruc()" style = "width: 160px; height: 30px; background-color: transparent; border-width: 5px">Update FRM                         
+                   </button> </td>                       
+                  </tr>            
+                  </table> 
+                   
+                 </td>
+                 </tr> 
+              </table>
+              </td>
+            </fieldset>
+            </td> 
+              
+          <form name="CtrlStructPage">          
+            <td width="570" align="center" valign="top">
+              <fieldset  style="border:3px color:&gray; width: 100%; height: 390;">
+              <legend class="fontControlLabel">Cascade Control Structure Composition</legend> 
+                                  		                            
+            <!-- current controller input parameters-->     
+              <table id="ControlStructureTable" border="0">              
+              <script>
+                  document.write(build_control_structure_line("scalar_ctrl","Scalar Control", "U_boost","[V]", "Speed_req","[rpm]", "Required boost voltage of V/Hz profile", "Required mechanical speed"));
+                  // Voltage DQ control with position feedback
+                  document.write("<td colspan =\"5\"><hr width=\"100%\" size=\"4\"  align=\"center\"></td>");
+                  document.write(build_control_structure_line("volt_ctrl","Voltage Control",  "U_req","[V]", "","", "Required voltage",""));
+                  // Current DQ control with position feedback
+                  document.write("<td colspan =\"5\"><hr width=\"100%\" size=\"4\"  align=\"center\"></td>");
+                  document.write(build_control_structure_line("torque_ctrl","Torque Limit ",  "I_max","[A]", "","", "Required torque output limit",""));
+                  // Speed controller with limitation
+                  document.write("<td colspan =\"5\"><hr width=\"100%\" size=\"4\"  align=\"center\"></td>");
+                  document.write(build_control_structure_line("speed_ctrl","Speed Control","Speed_req","[rpm]", "",""," Required Mechanical speed",""));
+                  // Position / Speed feedback
+                  document.write("<td colspan =\"5\"><hr width=\"100%\" size=\"4\"  align=\"center\"></td>");
+                  document.write(build_control_structure_line_with_selector("pospe_ctrl","Position & Speed Feedback","Sensor type","",""));
+              </script>
+              		                            
+              </table>	                               
+              </fieldset>
+              <!-- speed ramp-->     
+              <fieldset id="VHz_ramp" style="visibility:hidden; border:3px color:&gray; width: 100%; height: 50;">
+                <legend class="fontControlLabel">VHz Profile </legend>        
+                <table  border="0" >            
+                  <tr><td>              
+                  <script>
+                    // VHz voltage ramp
+                    document.write( build_constant_line("VHz&nbsp;U&nbsp;boost", "VHz_Uboost", "V/Hz Profile Boost Voltage Scaled"));
+                    document.write( build_constant_line("VHz&nbsp;const", "VHz_const", "V/Hz constant for U required calculation")); 
+                    document.write( build_constant_line("VHz&nbsp;ramp&nbsp;inc", "VHz_ramp_inc", "V/Hz Speed ramp increment called in Current loop"));
+                  </script>	
+                  </td></tr>	                            
+               </table>
+              </fieldset> 
+              </td>                             
+          </form>                                                   
+        </tr> 
+        </table>
+     <span style="visibility: hidden" face="sans-serif" id="txtErrMsg">.       
+      </span>          
+    </div>     
+  </body>
+</html>

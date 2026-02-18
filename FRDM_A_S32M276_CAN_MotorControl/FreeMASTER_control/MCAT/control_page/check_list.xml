@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="windows-1250"?>
+<control>
+  <appcontrol>
+    <M1_onoff>appSwitchState</M1_onoff>
+    <M1_clrFltvar>faultSwitchClear</M1_clrFltvar>
+  </appcontrol>
+  <VoltageGauge>
+    <M1_ActualVoltage>DCBVVoltage</M1_ActualVoltage>
+  </VoltageGauge>  
+  <SpeedGauge>
+    <M1_ActualSpeed>actualSpeed</M1_ActualSpeed>
+    <M1_RequiredSpeed>requiredSpeed</M1_RequiredSpeed>
+  </SpeedGauge>  
+  <M1_states FreemasterName="appState">
+    <M1_state>INIT</M1_state>
+    <M1_state>CALIB</M1_state>
+    <M1_state>ALIGN</M1_state>
+    <M1_state>START</M1_state>
+    <M1_state>RUN</M1_state>
+    <M1_state>STOP</M1_state>
+    <M1_state>FAULT</M1_state>
+  </M1_states>  
+  <errors>
+     <error>
+      <errorname>Idcb HI</errorname>
+      <FMNAME>Idcb_hi</FMNAME>
+      <FMRUNNAME>Idcb_hi_l</FMRUNNAME>
+    </error>
+    <error>
+      <errorname>Udcb HI</errorname>
+      <FMNAME>Udcb_hi</FMNAME>
+      <FMRUNNAME>Udcb_hi_l</FMRUNNAME>
+    </error>
+    <error>
+      <errorname>Udcb LO</errorname>
+      <FMNAME>Udcb_low</FMNAME>
+      <FMRUNNAME>Udcb_low_l</FMRUNNAME>
+    </error>
+    <error>
+      <errorname>AEFault</errorname>
+      <FMNAME>AEFault_err</FMNAME>
+      <FMRUNNAME>AEFault_err_l</FMRUNNAME>
+    </error>
+    <error>
+      <errorname>Stall</errorname>
+      <FMNAME>Stall_err</FMNAME>
+      <FMRUNNAME>Stall_err_l</FMRUNNAME>
+    </error>
+  </errors>  
+</control>

@@ -1,0 +1,175 @@
+#menu {background: rgb(53,58,63); }
+#menu ul {
+  width:840px;
+  margin: 0 ;
+  padding:0px 0 0 0px;
+  overflow:auto;
+}
+
+#menu li {
+  float: left;
+
+  list-style-type: none;
+  text-align: center;
+}
+
+#menu li a.active { 
+  background-image:url('images/pozadi.png');
+  color: rgb(53,58,63);
+  font-weight:normal;    
+  border-right-color: white;  
+  }
+
+#menu li a {
+  text-decoration: none;
+  color: #FFF;
+  width:92px;
+  float: left;
+  display: inline;
+  line-height: 35px;
+  padding: 0 8px;
+  border-right: 1px solid #FFFF;
+  font-family:arial;
+	font-weight:normal; 
+  font-size:0.75em;
+  cursor:pointer;
+}
+
+#menu li.first a {border-left: 0px solid #FFFF;}
+#menu li a:hover {background-color: rgb(230,79,12);} 
+
+#header ul {
+  width:100%;
+	float:left;
+	height:34px;
+	margin:0;
+	padding:0px 0 0 30px;
+}
+
+#header li {
+  display:block;
+	float:left;
+	background-image:url('images/menu-item-right.jpg');
+	background-repeat:no-repeat;
+	background-position:top right;
+	margin-left:5px;
+  width:130px;
+}
+
+#content {
+  background: transparent repeat-y top left;
+	font-weight: bolder;
+	width: 880px;
+	top: 135px;
+	height: 500px;
+	font-size:100%;
+}
+
+h1 {
+    margin: 0;
+    padding: 0 0 1em 0;
+} 
+
+#header #selected {
+    	background-image:url('images/menu-item-right-selected.jpg');
+}
+
+#header li a {
+  float:left;
+	border:none;
+	padding:9px 15px;
+	height:34px;
+	font-size:0.8em;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	color:#888888;
+	text-decoration:none;
+	display:block;
+	background-image:url('images/menu-item-left.jpg');
+	background-repeat:no-repeat;
+	background-position:top left;
+  text-align:center;
+  width:130px;
+}    
+
+.triangle_bottom_line {
+border-color: rgb(53,58,63) white transparent transparent;
+border-style: solid;
+border-width: 38px 38px 0px 0px;
+height: 0px;
+width: 0px;
+}             
+
+.triangle_upper_line {
+border-color: white rgb(182,17,26) transparent transparent;
+border-style: solid;
+border-width: 40px 40px 0px 0px;
+height: 0px;
+width: 0px;
+}  
+  
+.xlink {cursor:pointer}     
+.fontControl  {font-size:13px; font-family:arial; font-weight: normal;text-align: center; font-weight: bold; padding: 4px;}     
+.fontControlNeg  {font-size:13px; font-family:arial; font-weight: normal;text-align: center; font-weight: bold; padding: 4px; color:rgb(195,199,204);}
+.fontControl2  {font-size:12px; font-family:verdana; font-weight: normal;text-align: center; font-weight: normal; padding: 4px;}
+.fontControlLabel  {font-size:13px; font-family:Arial; text-align: center; font-weight: bold; padding: 4px; color:rgb(26,75,92);}         
+.fontControlLabelSet  {font-size:12px; font-family:Arial; text-align: left; font-weight: bold;}
+.fontControlLabelSet_M1  {font-size:12px; font-family:Arial; text-align: left; font-weight: bold; color:rgb(53,58,63);}
+.fontControlLabelSet_M2  {font-size:12px; font-family:Arial; text-align: left; font-weight: bold; color:rgb(40,113,138);}
+.fontControlLabelSet_M3  {font-size:12px; font-family:Arial; text-align: left; font-weight: bold; color:rgb(79,120,24);}
+.fontControlLabelNeg  {font-size:13px; font-family:Arial; text-align: center; font-weight: bold; padding: 4px; color:rgb(170,215,231);}
+.fontControlLabelS {font-size:12px; font-family:Arial; text-align: left; font-weight: normal;}
+.fontControlLabelS1 {font-size:12px; font-family:Arial; text-align: center; font-weight: bold;}
+.fontControlUnit  {font-size:12px; font-family:verdana; text-align: left; font-weight: normal; padding: 4px;}         
+.fontControlData  {font-size:12px; font-family:verdana; text-align: left; font-weight: normal; width: 80px}         
+.fontTitle {font-size:18px; font-family:Arial; text-align: center; font-weight: bold; padding: 5px; color:rgb(136,13,19); }
+.fontcheckbox {cursor:pointer; font-size:12px; font-family:arial; font-weight: normal; text-align: left; padding-left:0.5cm}
+.fontcheckbox2 {font-size:12px; font-family:arial; font-weight: normal; text-align: left; padding-left:0.5cm}
+
+.switch_on    {cursor:pointer; background: url("images\switch_slide_on.png") no-repeat center; width: 25%; height: 37px;text-align: center;font-size:11px; font-family: arial; font-weight: bold; color:white}
+.switch_off   {cursor:pointer; background: url("images\switch_slide_off.png") no-repeat center; width: 25%; height: 37px;text-align: center;font-size:11px; font-family: arial; font-weight: bold; color:gray}
+.appOn {cursor:pointer; background: url("images\onoff_red_on1.png") no-repeat top; width: 25px; height: 80px;}    
+.appOff {cursor:pointer; background: url("images\onoff_red_off1.png") no-repeat top; width: 25px; height: 80px;}
+.appStateBox {background-color: rgb(225,225,225); color: rgb(153,0,0); border-style: inset; border-width: 2px; font-size:20px; font-family:verdana; font-weight: bold;text-align: center; width: 200px; height: 17px; padding: 2px;}
+
+a img{
+  cursor: pointer;
+   outline:none;
+  border-style:none;
+  background: transparent;  
+  opacity:0.01;
+  filter:alpha(opacity=1);  
+}
+
+a:hover img{
+ border-style:none;
+  outline:none;
+ background: transparent; 
+ opacity:1.0;
+ filter:alpha(opacity=100);
+}  
+
+#header{  background-image:url('images/pozadi.png');  border-bottom: solid 2px black;}
+#path{  position:absolute;  font-size: 9pt;  font-family: Arial;  font-weight: bold;  padding: 2px;}
+#list{  font-size: 9pt;  font-family: Arial;  overflow:auto;}
+.folders{
+  padding: 1px;
+  border-top: solid 1px white;
+  border-left: solid 1px white;
+  border-right: solid 1px white;
+  border-bottom: solid 1px white;
+  cursor: hand;
+  pointer: hand;
+  background-color: white;
+}
+.folderButton{
+  padding: 0px;
+  border-style: outset;
+  border-width: 2px;
+  border-color:;
+  cursor: hand;
+  pointer: hand;
+  background-color: transparent;
+}
+A{  color:rgb(26,75,92);  text-decoration:none;  padding:5px;}
+A:hover{  color:#3394B8;  padding:5px;  border-style: none;  }

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<control>
+  <appcontrol>
+    <M1_onoff>M1.switchAppOnOff</M1_onoff><!-- Main application switch of MOTOR1 -->
+    <M2_onoff>M2.switchAppOnOff</M2_onoff><!-- Main application switch of MOTOR2 -->
+    <M3_onoff></M3_onoff><!-- Main application switch of MOTOR3 -->
+  </appcontrol>
+
+  <M1_states FreemasterName="M1.state"><!-- Application state variable of MOTOR1 -->
+    <M1_state>INIT</M1_state>
+    <M1_state>FAULT</M1_state>
+    <M1_state>READY</M1_state>
+    <M1_state>CALIB</M1_state>
+    <M1_state>ALIGN</M1_state>
+    <M1_state>RUN</M1_state>    
+  </M1_states>
+  
+  <M2_states FreemasterName="M2.state"> <!-- Application state variable of MOTOR2 -->
+    <M2_state>INIT</M2_state>
+    <M2_state>FAULT</M2_state>
+    <M2_state>READY</M2_state>
+    <M2_state>CALIB</M2_state>
+    <M2_state>ALIGN</M2_state>
+    <M2_state>RUN</M2_state>                
+  </M2_states>  
+  
+     
+  <M1_Parameters><!-- Variables for rotor alignment for MOTOR1 -->
+    <M1_Align_Voltage>Align Voltage</M1_Align_Voltage>
+    <M1_Align_Current>Align Current</M1_Align_Current>
+    <M1_Align_Duration>Align Duration</M1_Align_Duration>
+  </M1_Parameters>
+  
+  <M2_Parameters><!-- Variables for rotor alignment for MOTOR2 -->
+    <M2_Align_Voltage></M2_Align_Voltage>
+    <M2_Align_Current></M2_Align_Current>
+    <M2_Align_Duration></M2_Align_Duration>
+  </M2_Parameters>
+  
+ 
+  <M1_BLDCControlLoop><!-- Variables for BLDC Control Loop for MOTOR1 -->
+    <M1_SL_Kp_g>Speed Loop Kp</M1_SL_Kp_g><!-- Parallel PI KP gain -->
+    <M1_SL_Kp_sc></M1_SL_Kp_sc><!-- Parallel PI KP gain scale --> 
+    <M1_SL_Ki_g>Speed Loop Ki</M1_SL_Ki_g><!-- Parallel PI KI gain -->
+    <M1_SL_Ki_sc></M1_SL_Ki_sc><!-- Parallel PI KI gain scale -->
+    <M1_SL_Nsh></M1_SL_Nsh><!-- Reccurent PI shift -->
+    <M1_SL_CC1SC></M1_SL_CC1SC><!-- Reccurent PI CC1 constant --> 
+    <M1_SL_CC2SC></M1_SL_CC2SC><!-- Reccurent PI CC2 constant  -->
+    <M1_TL_Kp_g>Torque Loop Kp</M1_TL_Kp_g><!-- Parallel PI KP gain -->
+    <M1_TL_Kp_sc></M1_TL_Kp_sc><!-- Parallel PI KP gain scale --> 
+    <M1_TL_Ki_g>Torque Loop Ki</M1_TL_Ki_g><!-- Parallel PI KI gain -->
+    <M1_TL_Ki_sc></M1_TL_Ki_sc><!-- Parallel PI KI gain scale -->
+    <M1_TL_Nsh></M1_TL_Nsh><!-- Reccurent PI shift -->
+    <M1_TL_CC1SC></M1_TL_CC1SC><!-- Reccurent PI CC1 constant --> 
+    <M1_TL_CC2SC></M1_TL_CC2SC><!-- Reccurent PI CC2 constant  -->
+    <M1_RAMP_UP_g>Speed Ramp Up</M1_RAMP_UP_g><!-- Speed ramp increment UP -->
+    <M1_RAMP_DOWN_g>Speed Ramp Down</M1_RAMP_DOWN_g><!-- Speed ramp increment DOWN -->
+    <M1_TL_MAF_sc>Torque Filter</M1_TL_MAF_sc><!-- DC-Bus current Filter, number of samples -->
+    <M1_SL_UP_LIM>Speed Loop Limit High</M1_SL_UP_LIM><!-- PI High limit -->
+    <M1_SL_LOW_LIM>Speed Loop Limit Low</M1_SL_LOW_LIM><!-- PI Low limit -->
+    <M1_TL_UP_LIM>Torque Loop Limit High</M1_TL_UP_LIM><!-- PI High limit -->
+    <M1_TL_LOW_LIM>Torque Loop Limit Low</M1_TL_LOW_LIM><!-- PI Low limit -->
+   </M1_BLDCControlLoop>
+
+   <M1_BLDCSensorless><!-- Variables for BLDC Sensorless control for MOTOR1 -->
+    <M1_Speed_min_sc>Speed Minimal</M1_Speed_min_sc><!-- Minimal speed scaled -->
+    <M1_Freewheel_long>Freewheel Period Long</M1_Freewheel_long><!-- Freewheel time long -->
+    <M1_Freewheel_short>Freewheel Period Short</M1_Freewheel_short><!-- Freewheel time short -->
+    <M1_Start_cmt_accel>Start Commutation Acceleration</M1_Start_cmt_accel><!-- Startup commutation acceleration -->
+    <M1_Start_cmt_cnt>Start Commutation Counter</M1_Start_cmt_cnt><!-- Startup commutation counts -->
+    <M1_Start_cmt_per>Start Commutation Period</M1_Start_cmt_per><!-- Startup commutation period -->
+    <M1_Cmt_time_off>Period Toff</M1_Cmt_time_off><!-- Commutation time off -->
+    <M1_Flux_trh>Back-EMF Integration Threshold</M1_Flux_trh><!-- Flux treshold -->
+  </M1_BLDCSensorless>
+  
+</control>
+
+

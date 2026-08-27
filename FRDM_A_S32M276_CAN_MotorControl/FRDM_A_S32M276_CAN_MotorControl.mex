@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding= "UTF-8" ?>
-<configuration name="S32M276" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_18 http://mcuxpresso.nxp.com/XSD/mex_configuration_18.xsd" uuid="c718150d-9ddf-4536-a86f-7f112e2a597b" version="18" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_18" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<configuration name="S32M276" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_19 http://mcuxpresso.nxp.com/XSD/mex_configuration_19.xsd" uuid="c718150d-9ddf-4536-a86f-7f112e2a597b" version="19" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_19" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <common>
       <processor>S32M276</processor>
       <package>S32M276_64LQFP</package>
@@ -146,7 +146,7 @@
             </function>
          </functions_list>
       </pins>
-      <clocks name="Clocks" version="17.0" enabled="true" update_project_code="true">
+      <clocks name="Clocks" version="19.0" enabled="true" update_project_code="true">
          <generated_project_files>
             <file path="generate/include/Clock_Ip_Cfg.h" update_enabled="true"/>
             <file path="generate/include/Clock_Ip_Cfg_Defines.h" update_enabled="true"/>
@@ -216,7 +216,7 @@
                   <clock_output id="EIM0_CLK.outFreq" value="60 MHz" locked="false" accuracy=""/>
                   <clock_output id="EMIOS0_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
                   <clock_output id="EMIOS1_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
-                  <clock_output id="ERM0_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
+                  <clock_output id="ERM0_CLK.outFreq" value="60 MHz" locked="false" accuracy=""/>
                   <clock_output id="FIRCOUT.outFreq" value="48 MHz" locked="false" accuracy=""/>
                   <clock_output id="FLEXCAN0_CLK.outFreq" value="24 MHz" locked="false" accuracy=""/>
                   <clock_output id="FLEXCAN1_CLK.outFreq" value="24 MHz" locked="false" accuracy=""/>
@@ -252,7 +252,7 @@
                   <clock_output id="STM0_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
                   <clock_output id="STMA_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
                   <clock_output id="SWT0_CLK.outFreq" value="32 kHz" locked="false" accuracy=""/>
-                  <clock_output id="TEMPSENSE_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="TEMPSENSE_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
                   <clock_output id="TRACE_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
                   <clock_output id="TRGMUX0_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
                   <clock_output id="TSENSE0_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
@@ -608,7 +608,7 @@
             </dependency>
             <dependency resourceType="SWComponent" resourceId="platform.middleware.S32K3xx_AMMCLIB" description="An unsupported version of the S32K3xx_AMMCLIB in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. The project might not compile correctly." problem_level="1" source="Peripherals">
                <feature name="version" evaluation="equivalent">
-                  <data type="Version">1.1.44</data>
+                  <data type="Version">1.1.45</data>
                </feature>
             </dependency>
             <dependency resourceType="Tool" resourceId="Clocks" description="The Clocks tool is required by the Peripherals tool, but it is disabled." problem_level="2" source="Peripherals">
@@ -1340,7 +1340,7 @@
                            <setting name="ModuleId" value="123"/>
                            <setting name="SwMajorVersion" value="7"/>
                            <setting name="SwMinorVersion" value="0"/>
-                           <setting name="SwPatchVersion" value="0"/>
+                           <setting name="SwPatchVersion" value="1"/>
                            <array name="VendorApiInfix">
                               <setting name="0" value=""/>
                            </array>
@@ -2801,7 +2801,6 @@
                         </array>
                         <struct name="GptConfigurationOfOptApiServices">
                            <setting name="Name" value=""/>
-                           <setting name="GptPredefTimerFunctionalityApi" value="false"/>
                         </struct>
                         <struct name="GptAutosarExt">
                            <setting name="Name" value="GptAutosarExt"/>
@@ -2810,7 +2809,6 @@
                            <setting name="GptEnableUserModeSupport" value="false"/>
                            <setting name="ChainModeApi" value="false"/>
                            <setting name="GptStandbyWakeupSupport" value="false"/>
-                           <setting name="GptEnableTriggers" value="false"/>
                         </struct>
                         <struct name="GptDriverConfiguration">
                            <setting name="Name" value="GptDriverConfiguration"/>
@@ -3752,7 +3750,6 @@
                         </array>
                         <struct name="GptConfigurationOfOptApiServices">
                            <setting name="Name" value=""/>
-                           <setting name="GptPredefTimerFunctionalityApi" value="false"/>
                         </struct>
                         <struct name="GptAutosarExt">
                            <setting name="Name" value="GptAutosarExt"/>
@@ -3835,8 +3832,8 @@
                            <setting name="FlexCANIpDevErrorDetect" value="true"/>
                            <setting name="FlexCANEnableTimeStampSupport" value="false"/>
                            <setting name="hrSrc" value="FLEXCAN_HRTIMERSRC_STM0"/>
-                           <setting name="is_memory_error_detection_and_correction_enabled" value="false"/>
-                           <setting name="memory_error_response" value="FLEXCAN_NORMAL_MODE"/>
+                           <setting name="MemoryErrorDetectionAndCorrectionEnabled" value="false"/>
+                           <setting name="FlexCANNonCorrectableErrorResponse" value="FLEXCAN_NORMAL_MODE"/>
                         </struct>
                         <struct name="timeout">
                            <setting name="Name" value="FlexCAN_Timeout"/>

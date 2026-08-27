@@ -1,7 +1,7 @@
 /*******************************************************************************
 *   Project      : S32M27xEVB_BLDC_6step_sensorless
 *   Revision     : 1.0
-*   RTD Version  : 7.0.0
+*   RTD Version  : 7.0.1
 *   Brief description  :
 *   File contains definition of functions needed for inverter voltage control.
 *
